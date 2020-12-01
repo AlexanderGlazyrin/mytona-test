@@ -1,26 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {createContext} from 'react';
+import {AllVacancies} from "./Component/AllVacancies";
+import {JobsStore, store} from "./store/JobsStore";
+import Container from '@material-ui/core/Container';
+import {SearchInput} from "./Component/SearchInput";
+import {AppPagination} from "./Component/AppPagination";
+
+export const JobsContext = createContext<JobsStore | null>(null)
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <JobsContext.Provider value={store}>
+      <Container maxWidth="lg">
+        <SearchInput />
+        <AllVacancies/>
+        <AppPagination />
+      </Container>
+    </JobsContext.Provider>
+  )
 }
 
 export default App;
