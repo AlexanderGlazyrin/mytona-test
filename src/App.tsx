@@ -1,21 +1,40 @@
 import React, {createContext} from 'react';
-import {AllVacancies} from "./Component/AllVacancies";
-import {JobsStore, store} from "./store/JobsStore";
+import {AllVacancies} from "./pages/AllVacancies";
+import jobsStore, {JobsStore} from "./store/JobsStore";
+import vacancyInfoStore, {VacancyInfoStore} from "./store/VacancyInfoStore";
 import Container from '@material-ui/core/Container';
-import {SearchInput} from "./Component/SearchInput";
-import {AppPagination} from "./Component/AppPagination";
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {Navbar} from "./components/Navbar";
+import './Style.css';
+import {SignUp} from "./pages/SignUp";
+import {AboutVacancy} from "./pages/AboutVacancy";
 
-export const JobsContext = createContext<JobsStore | null>(null)
+interface IStore {
+  jobsStore: JobsStore;
+  vacancyInfoStore: VacancyInfoStore;
+}
 
+export const JobsContext = createContext<IStore | null>(null)
 function App() {
 
   return (
-    <JobsContext.Provider value={store}>
-      <Container maxWidth="lg">
-        <SearchInput />
-        <AllVacancies/>
-        <AppPagination />
-      </Container>
+    <JobsContext.Provider value={{jobsStore, vacancyInfoStore}}>
+      <Router>
+        <Navbar/>
+        <Container maxWidth="lg">
+          <Switch>
+            <Route path="/signup" exact>
+              <SignUp/>
+            </Route>
+            <Route path="/vacancy/:id" exact>
+              <AboutVacancy/>
+            </Route>
+            <Route path="/" exact>
+              <AllVacancies/>
+            </Route>
+          </Switch>
+        </Container>
+      </Router>
     </JobsContext.Provider>
   )
 }

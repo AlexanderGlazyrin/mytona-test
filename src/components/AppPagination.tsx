@@ -17,7 +17,7 @@ const useStyles = makeStyles(() =>
 
 export const AppPagination: React.FC = observer(() => {
   const classes = useStyles();
-  const jobsStore = useContext(JobsContext);
+  const jobsStore = useContext(JobsContext)?.jobsStore;
 
   const getPage = (e: any, page: number) => {
     jobsStore?.loadPage(page);

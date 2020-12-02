@@ -36,7 +36,7 @@ export const SearchInput: React.FC = () => {
     const classes = useStyles()
     const initSate: IInputs = {vacancy: '', place: '', salary: ''};
     const [inputValues, setInputValues] = useState<IInputs>(initSate);
-    const jobsStore = useContext(JobsContext);
+    const jobsStore = useContext(JobsContext)?.jobsStore;
 
     const searchVacancies = () => {
       const areasObj = jobsStore?.areas.find((area) => {

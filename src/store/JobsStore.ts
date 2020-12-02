@@ -1,10 +1,10 @@
 import {action, computed, makeObservable, observable, runInAction} from 'mobx';
-import {Area, IInputs, IJobs, SearchOptions} from "../interfaces/interfaces";
+import {TArea, IInputs, IJobs, ISearchOptions} from "../interfaces/interfaces";
 
 export class JobsStore {
   jobs: IJobs[] = [];
-  areas: Area[] = [];
-  searchOptions: SearchOptions = {
+  areas: TArea[] = [];
+  searchOptions: ISearchOptions = {
     action: 'https://api.hh.ru/vacancies',
     text: '',
     place: '',
@@ -53,22 +53,21 @@ export class JobsStore {
 
   loadJobs = async () => {
     const action = this.makeAction
-    console.log(action)
     const res = await fetch(action, {
       headers: {'User-Agent': 'api-test-agent'}
     })
     const jobs = await res.json()
     runInAction(() => {
       this.jobs = jobs.items.map((el: any) => {
-        const {name, salary, area: {name: place}, url, snippet} = el;
-        return {name, place, salary, url, snippet}
+        const {name, salary, area: {name: place}, url, snippet, id} = el;
+        return {name, place, salary, url, snippet, id}
       });
-      const {found, pages, per_page: perPage, page} = jobs
+      const {found, pages, per_page: perPage, page} = jobs;
       this.searchOptions = {...this.searchOptions, found, pages, perPage, page};
     })
   }
 
-  getAreas(areas: Area[]) {
+  getAreas(areas: TArea[]) {
     areas.forEach((area) => {
       if (area.areas?.length) this.getAreas(area.areas);
       else {
@@ -103,6 +102,6 @@ export class JobsStore {
   }
 }
 
-export const store = new JobsStore();
+export default new JobsStore();
 
 

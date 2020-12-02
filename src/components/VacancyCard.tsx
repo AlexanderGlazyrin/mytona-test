@@ -3,9 +3,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import {IJobs, Salary} from "../interfaces/interfaces";
+import {IJobs, TSalary} from "../interfaces/interfaces";
+import { Link } from 'react-router-dom';
+import parse from "html-react-parser"
 
 interface VacancyCardProps {
   vacancy: IJobs;
@@ -22,10 +23,15 @@ const useStyles = makeStyles({
   salary: {
     fontSize: 18,
     marginBottom: 10,
+  },
+  link: {
+    marginLeft: 8,
+    marginBottom: 8,
+    color: '#3f51b5'
   }
 });
 
-function getSalary(salaryObj: Salary | null): string {
+export function getSalary(salaryObj: TSalary | null): string {
   if (salaryObj?.from && salaryObj?.to) return `${salaryObj.from}-${salaryObj.to} ${salaryObj.currency}`;
   else if (salaryObj?.from) return `от ${salaryObj.from} ${salaryObj.currency}`;
   else if (salaryObj?.to) return `до ${salaryObj.to} ${salaryObj.currency}`;
@@ -48,14 +54,14 @@ export const VacancyCard: React.FC<VacancyCardProps> = ({vacancy}) => {
           {getSalary(vacancy.salary)}
         </Typography>
         <Typography variant="body2" component="p">
-          {vacancy.snippet.requirement?.replace(/&quot;/g, '"')}
+          {vacancy.snippet.requirement ? parse(vacancy.snippet.requirement) : null}
         </Typography>
         <Typography variant="body2" component="p">
-          {vacancy.snippet.responsibility}
+          {vacancy.snippet.responsibility ? parse(vacancy.snippet.responsibility) : null}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Подробнее</Button>
+        <Link className={classes.link} to={`/vacancy/${vacancy.id}`}>Подробнее</Link>
       </CardActions>
     </Card>
   );

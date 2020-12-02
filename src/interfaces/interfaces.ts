@@ -1,13 +1,21 @@
-export type Salary = {
+export type TSalary = {
   from: number,
   to: number,
   currency: string,
   gross: boolean
 }
 
-export interface IJobs {
+export type TArea = {
+  id: string;
+  parent_id?: string;
   name: string;
-  salary: Salary;
+  areas?: TArea[];
+}
+
+export interface IJobs {
+  id: string;
+  name: string;
+  salary: TSalary;
   place: string;
   url: string;
   snippet: {
@@ -16,7 +24,7 @@ export interface IJobs {
   },
 }
 
-export interface SearchOptions {
+export interface ISearchOptions {
   text: string,
   action: string,
   place: string,
@@ -33,10 +41,14 @@ export interface IInputs {
   salary: string;
 }
 
-export type Area = {
+export interface IVacancy {
   id: string;
-  parent_id?: string | null;
   name: string;
-  areas?: Area[];
+  area: string;
+  employer: {
+    name: string,
+    url: string,
+  }
+  description: string;
+  salary: TSalary;
 }
-
