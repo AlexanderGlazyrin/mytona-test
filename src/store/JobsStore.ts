@@ -43,7 +43,7 @@ export class JobsStore {
       action += `&page=${this.searchOptions.page}`;
     }
     if (this.searchOptions.salary) {
-      action += `&salary=${this.searchOptions.salary}`;
+      action += `&salary=${this.searchOptions.salary}&only_with_salary=true`;
     }
     if (this.searchOptions.place) {
       action += `&area=${this.searchOptions.place}`;

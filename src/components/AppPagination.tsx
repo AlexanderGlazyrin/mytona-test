@@ -15,9 +15,11 @@ const useStyles = makeStyles(() =>
   }),
 );
 
+
 export const AppPagination: React.FC = observer(() => {
   const classes = useStyles();
   const jobsStore = useContext(JobsContext)?.jobsStore;
+
 
   const getPage = (e: any, page: number) => {
     jobsStore?.loadPage(page);
@@ -25,7 +27,7 @@ export const AppPagination: React.FC = observer(() => {
 
   return (
     <div className={classes.root}>
-      <Pagination count={jobsStore?.searchOptions.pages} onChange={getPage}/>
+      <Pagination count={jobsStore?.searchOptions.pages} onChange={getPage} page={jobsStore ? (jobsStore.searchOptions.page + 1) : 1}/>
     </div>
   );
 });

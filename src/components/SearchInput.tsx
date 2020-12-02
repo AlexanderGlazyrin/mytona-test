@@ -57,6 +57,7 @@ export const SearchInput: React.FC = () => {
             <TextField
               id="standard-basic"
               label="Наименование вакансии"
+              variant="outlined"
               className={classes.textInput}
               value={inputValues.vacancy}
               onChange={(e) => setInputValues(prev => {
@@ -79,10 +80,11 @@ export const SearchInput: React.FC = () => {
                       direction="row"
                       justify="center"
                       alignItems="center">
-                  <Grid item xs={12}>
+                  <Grid item xs={6}>
                     <TextField
                       id="standard-basic"
                       label="Город"
+                      variant="outlined"
                       className={classes.textInput}
                       value={inputValues.place}
                       onChange={(e) => setInputValues(prev => {
@@ -90,10 +92,11 @@ export const SearchInput: React.FC = () => {
                       })}
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={6}>
                     <TextField
                       id="standard-basic"
                       label="Заработная плата"
+                      variant="outlined"
                       className={classes.textInput}
                       value={inputValues.salary}
                       onChange={(e) => setInputValues(prev => {
